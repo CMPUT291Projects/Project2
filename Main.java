@@ -5,6 +5,9 @@ import java.util.*;
 
 public class Main
 {
+
+	private static final String DB_DIRECTORY = "/tmp/edcarter";
+	private static final int NO_RECORDS = 100000;
 	/*
 		Run the database application.  Log the user into the database and then prompt
 		them to select which action they want to perform.
