@@ -24,6 +24,8 @@ public class Main
 		String action = co.readLine().toUpperCase();
 		System.out.println();
 		if (action.equals("1")) {
+			SetupDB sdb = new SetupDB();
+			sdb.createDb(args[0]);
 		} else if (action.equals("2")) {
 		} else if (action.equals("3")) {
 		} else if (action.equals("4")) {
