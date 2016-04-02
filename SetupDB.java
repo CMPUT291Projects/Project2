@@ -60,8 +60,9 @@ public class SetupDB {
             populateTable(my_table,NO_RECORDS);
             System.out.println("100000 records inserted into" + DB_TABLE);
 
+            DbInstance.setInstance(my_table);
             /* cloase the database and the db enviornment */
-            my_table.close();
+            //my_table.close();
             // /* to remove the table */
             //
 
