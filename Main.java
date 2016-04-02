@@ -8,6 +8,8 @@ public class Main
 
 	private static final String DB_DIRECTORY = "/tmp/edcarter";
 	private static final int NO_RECORDS = 100000;
+	public static String ANSWER_PATH = "answers";
+
 	/*
 		Run the database application.  Log the user into the database and then prompt
 		them to select which action they want to perform.
@@ -23,16 +25,43 @@ public class Main
 		Console co = System.console();
 		String action = co.readLine().toUpperCase();
 		System.out.println();
-		if (action.equals("1")) {
-			SetupDB sdb = new SetupDB();
-			sdb.createDb(args[0]);
-		} else if (action.equals("2")) {
-		} else if (action.equals("3")) {
-		} else if (action.equals("4")) {
-		} else if (action.equals("5")) {
-		} else if (action.equals("6")) {
-		} else {
-			System.err.println("Invalid value entered, please try again\n");
+
+		createAnswersFile();
+
+		while (true) {
+			if (action.equals("1")) {
+				SetupDB sdb = new SetupDB();
+				sdb.createDb(args[0]);
+			} else if (action.equals("2")) {
+			} else if (action.equals("3")) {
+			} else if (action.equals("4")) {
+			} else if (action.equals("5")) {
+				SetupDB sdb = new SetupDB();
+				sdb.delDB();
+			} else if (action.equals("6")) {
+				clearAnswersFile();
+				break;
+			} else {
+				System.err.println("Invalid value entered, please try again\n");
+			}
+		}
+	}
+
+	private static void createAnswersFile() {
+		try {
+			File file = new File(ANSWER_PATH);
+			file.createNewFile();
+		} catch (Exception e) {
+			System.err.println("File creation error: " + e.toString());
+		}
+	}
+
+	private static void clearAnswersFile() {
+		try {
+			File file = new File(ANSWER_PATH);
+			file.delete();
+		} catch (Exception e) {
+			System.err.println("File creation error: " + e.toString());
 		}
 	}
 }

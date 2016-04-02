@@ -63,14 +63,23 @@ public class SetupDB {
             /* cloase the database and the db enviornment */
             my_table.close();
             // /* to remove the table */
-            // my_table.remove(SAMPLE_TABLE,null,null);
+            //
 
         }
         catch (Exception e1) {
-            System.err.println("Test failed: " + e1.toString());
+            System.err.println("Creation failed: " + e1.toString());
         }
     }
 
+    public void delDB() {
+        try {
+            DatabaseConfig dbConfig = new DatabaseConfig();
+            Database my_table = new Database(DB_TABLE, null, dbConfig);
+            my_table.remove(DB_TABLE,null,null);
+        } catch (Exception e) {
+            System.err.println("Deletion failed: " + e.toString());
+        }
+    }
 
     /*
     *  To poplate the given table with nrecs records
