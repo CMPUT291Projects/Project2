@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.List;
 
 public class Answers
@@ -31,7 +30,8 @@ public class Answers
 
 	public void insertAnswer(KeyValue answer) {
 		try {
-			PrintWriter writer = new PrintWriter(path, "UTF-8");
+			File file = new File(path);
+			PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
 			writer.println(answer.getKey());
 			writer.println(answer.getValue());
 			writer.println("");
