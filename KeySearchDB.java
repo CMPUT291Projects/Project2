@@ -24,12 +24,18 @@ public class KeySearchDB {
         data = new DatabaseEntry();
 
 	try {
+		long start = System.nanoTime();
 		OperationStatus oprStatus = std_db.get(null, key, data, LockMode.DEFAULT);
+		long end = System.nanoTime();
+
+		long micros = (end - start) / 1000;
 
 		if (data.getData() == null) {
+			System.out.println(String.format("0 records retrieved in %d micro-seconds", micros));
 			System.out.println("No entry with that key");
 			return;
 		}
+		System.out.println(String.format("1 record retrieved in %d micro-seconds", micros));
 		String datastr = new String(data.getData());
 		Answers ans = new Answers("answers");
 		ans.insertAnswer(new KeyValue(keystr, datastr));
