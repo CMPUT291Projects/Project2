@@ -35,7 +35,11 @@ public class Main
 				KeySearchDB ksdb = new KeySearchDB();
 				ksdb.run(dbType);
 			} else if (action.equals("3")) {
+				//retrieve by data
 			} else if (action.equals("4")) {
+				//retrieve range
+				RangeSearchDB rs = new RangeSearchDB();
+				rs.run(dbType);
 			} else if (action.equals("5")) {
 				DbInstance.deleteInstance(dbType);
 			} else if (action.equals("6")) {
