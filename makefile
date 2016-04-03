@@ -8,7 +8,7 @@ run: main
 	export CLASSPATH
 	LD_LIBRARY_PATH=/oracle/lib
 	export LD_LIBRARY_PATH
-	java Main
+	java Main 1
 
 clean: 
 	rm *.class *~

@@ -6,13 +6,13 @@ public class KeySearchDB {
     DatabaseEntry key;
     DatabaseEntry data;
 
-    private static final String DB_TABLE = "/tmp/my_db/db_table.db";
+    //private static final String DB_TABLE = "/tmp/edcarter/db_table.db";
 
     public KeySearchDB() {
     }
 
-    public void run() {
-        Database std_db = DbInstance.getInstance();
+    public void run(String dbType) {
+        Database std_db = DbInstance.getInstance(dbType);
         System.out.println("Enter a key to search:");
         Console co = System.console();
 	String keystr = co.readLine().toLowerCase();

@@ -19,8 +19,8 @@ import java.nio.file.*;
 public class SetupDB {
 
     // to specify the file name for the table
-    private static final String DB_TABLE = "/tmp/my_db/db_table.db";
-    private static final String DB_TABLE_PATH = "/tmp/my_db/";
+    //private static final String DB_TABLE = "/tmp/my_db/db_table.db";
+    //private static final String DB_TABLE_PATH = "/tmp/my_db/";
     private static final int NO_RECORDS = 100000;
 
     /*
@@ -36,7 +36,7 @@ public class SetupDB {
 
             // Create the database object.
             // There is no environment for this simple example.
-            DatabaseConfig dbConfig = new DatabaseConfig();
+            /*DatabaseConfig dbConfig = new DatabaseConfig();
             if (dbType.equals("1")) {
                 dbConfig.setType(DatabaseType.BTREE);
             } else if (dbType.equals("2")) {
@@ -51,16 +51,18 @@ public class SetupDB {
             if (Files.notExists(Paths.get(DB_TABLE_PATH))) {
                 File dir = new File(DB_TABLE_PATH);
                 dir.mkdir();
-            }
+            }*/
 
-            Database my_table = new Database(DB_TABLE, null, dbConfig);
-            System.out.println(DB_TABLE + " has been created");
+            //Database my_table = new Database(DB_TABLE, null, dbConfig);
+            //System.out.println(DB_TABLE + " has been created");
 
+	    Database my_table = DbInstance.getInstance(dbType);
             /* populate the new database with NO_RECORDS records */
             populateTable(my_table,NO_RECORDS);
-            System.out.println("100000 records inserted into" + DB_TABLE);
+            my_table.sync();
+            System.out.println(String.format("100000 records inserted into database %s", my_table.getDatabaseFile()));
 
-            DbInstance.setInstance(my_table);
+            //DbInstance.setInstance(my_table);
             /* cloase the database and the db enviornment */
             //my_table.close();
             // /* to remove the table */
@@ -72,15 +74,18 @@ public class SetupDB {
         }
     }
 
-    public void delDB() {
+	/*
+    public void delDB(String dbType) {
         try {
             DatabaseConfig dbConfig = new DatabaseConfig();
             Database my_table = new Database(DB_TABLE, null, dbConfig);
+	    Database my_table = DbInstance.getInstance(dbType);
             my_table.remove(DB_TABLE,null,null);
         } catch (Exception e) {
             System.err.println("Deletion failed: " + e.toString());
         }
     }
+	*/
 
     /*
     *  To poplate the given table with nrecs records

@@ -6,8 +6,6 @@ import java.util.*;
 public class Main
 {
 
-	private static final String DB_DIRECTORY = "/tmp/edcarter";
-	private static final int NO_RECORDS = 100000;
 	public static String ANSWER_PATH = "answers";
 
 	/*
@@ -18,6 +16,7 @@ public class Main
 
 		Answers answers = new Answers(ANSWER_PATH);
 		answers.createAnswersFile();
+		String dbType = args[0];
 
 		while (true) {
 			System.out.print("To create and populate a database enter '1'\n" +
@@ -26,20 +25,19 @@ public class Main
 				"To retrieve records with a given reange of key values  enter '4'\n" +
 				"To destroy the database enter '5'\n" +
 				"To quit enter '6'\n");
-
+			
 			Console co = System.console();
 			String action = co.readLine().toUpperCase();
 			if (action.equals("1")) {
 				SetupDB sdb = new SetupDB();
-				sdb.createDb(args[0]);
+				sdb.createDb(dbType);
 			} else if (action.equals("2")) {
 				KeySearchDB ksdb = new KeySearchDB();
-				ksdb.run();
+				ksdb.run(dbType);
 			} else if (action.equals("3")) {
 			} else if (action.equals("4")) {
 			} else if (action.equals("5")) {
-				SetupDB sdb = new SetupDB();
-				sdb.delDB();
+				DbInstance.deleteInstance(dbType);
 			} else if (action.equals("6")) {
 				break;
 			} else {
@@ -49,7 +47,7 @@ public class Main
 
 		answers.clearAnswersFile();
 		try {
-			DbInstance.getInstance().close();
+			DbInstance.getInstance(dbType).close();
 		} catch (Exception ex) {
 			System.err.println("Error closing database.");
 		}
