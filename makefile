@@ -11,4 +11,4 @@ run: main
 	java Main 1
 
 clean: 
-	rm *.class *~
+	rm *.class *~ dump short_dump

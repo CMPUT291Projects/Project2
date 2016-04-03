@@ -6,7 +6,6 @@ public class KeySearchDB {
     DatabaseEntry key;
     DatabaseEntry data;
 
-    //private static final String DB_TABLE = "/tmp/edcarter/db_table.db";
 
     public KeySearchDB() {
     }
