@@ -53,7 +53,7 @@ public class Main
 
 		answers.clearAnswersFile();
 		try {
-			DbInstance.getInstance(dbType).close();
+			DbInstance.closeInstance();
 		} catch (Exception ex) {
 			System.err.println("Error closing database.");
 		}

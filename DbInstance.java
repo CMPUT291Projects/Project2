@@ -19,10 +19,19 @@ public class DbInstance
 			DatabaseConfig dbConfig = new DatabaseConfig();
 			Database my_table = new Database(DB_TABLE, null, dbConfig);;
 			my_table.remove(DB_TABLE,null,null);
-			new File(DB_TABLE).delete();
+			File my_file = new File(DB_TABLE);
+			my_file.delete();
 			instance = null;
 		} catch (Exception ex) {
 			System.out.println("Unable to delete db");
+		}
+	}
+
+	public static void closeInstance() {
+		try {
+			if (instance != null) instance.close();
+		} catch (DatabaseException ex) {
+			System.out.println("Unable to close database");
 		}
 	}
 

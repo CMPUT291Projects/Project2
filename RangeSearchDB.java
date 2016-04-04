@@ -11,17 +11,16 @@ public class RangeSearchDB
         Database std_db = DbInstance.getInstance(dbType);
         System.out.println("Enter a start key to search:");
         Console co = System.console();
-	String keystr = co.readLine().toLowerCase();
+	String startkeystr = co.readLine().toLowerCase();
 	
 	System.out.println("Enter a end key to search:");
 	String endkeystr = co.readLine().toLowerCase();
 	String datastr = null;
+	String keystr = null;
 
 	
 
         DatabaseEntry key = new DatabaseEntry();
-        key.setData(keystr.getBytes());
-        key.setSize(keystr.length());
         DatabaseEntry data = new DatabaseEntry();
 
 	try {
@@ -29,6 +28,8 @@ public class RangeSearchDB
 		List<KeyValue> records = new ArrayList<KeyValue>();
 		if (dbType.equals("1")) {
 			//btree
+			key.setData(startkeystr.getBytes());
+        		key.setSize(startkeystr.length());
 			long start = System.nanoTime();
 			Cursor std_cursor = std_db.openCursor(null, null); 
 			OperationStatus oprStatus = std_cursor.getSearchKeyRange(key, data, LockMode.DEFAULT);
@@ -48,16 +49,15 @@ public class RangeSearchDB
 			//hashtable
 			long start = System.nanoTime();
 			Cursor std_cursor = std_db.openCursor(null, null);
-			OperationStatus oprStatus = std_cursor.getSearchKeyRange(key, data, LockMode.DEFAULT);
-			System.out.println(String.format("operation status success: %b", oprStatus == OperationStatus.SUCCESS));
+			OperationStatus oprStatus = std_cursor.getFirst(key, data, LockMode.DEFAULT);
 			keystr = new String(key.getData());
 			datastr = new String(data.getData());
 
-			while (keystr.compareTo(endkeystr) <= 0 && oprStatus == OperationStatus.SUCCESS) {
-				records.add(new KeyValue(keystr, datastr));
-				String nextKey = keystr + "a";
-				key.setData(nextKey.getBytes());
-				oprStatus = std_cursor.getSearchKeyRange(key, data, LockMode.DEFAULT);
+			while (oprStatus == OperationStatus.SUCCESS) {
+				if (keystr.compareTo(endkeystr) <= 0 && keystr.compareTo(startkeystr) >= 0) {
+					records.add(new KeyValue(keystr, datastr));
+				}
+				oprStatus = std_cursor.getNext(key, data, LockMode.DEFAULT);
 				keystr = new String(key.getData());
 				datastr = new String(data.getData());
 			}
