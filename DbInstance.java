@@ -13,6 +13,7 @@ public class DbInstance
 		if (instance == null) instance = constructInstance(dbType);
 		return instance;
 	}
+
 		
 	public static void deleteInstance() {
 		try {
@@ -43,6 +44,7 @@ public class DbInstance
                 	dbConfig.setType(DatabaseType.HASH);
             	} else if (dbType.equals("3")) {
                 	//dbConfig.setType(DatabaseType.INDEX);
+			//construct the secondary db
             	} else {
                 	System.err.println("Invalid database type specified.");
             	}
@@ -59,3 +61,15 @@ public class DbInstance
 		}
 	}
 }
+
+	class SwapKeys implements DbSecondaryKeyCreate {
+		public int secondary_key_create(Db secondary,
+		    Dbt pkey, Dbt pdata, Dbt skey) {
+
+			// Make a fixed-length array of last_name
+			byte[] newKey = pdata.getData();
+			skey.set_data(newKey);
+			skey.set_size(newKey.length);
+			return (0);
+		}
+	}
