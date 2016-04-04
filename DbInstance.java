@@ -36,8 +36,6 @@ public class DbInstance
 	}
 
 	private static Database constructInstance(String dbType) {
-		// Create the database object.
-            	// There is no environment for this simple example.
             	DatabaseConfig dbConfig = new DatabaseConfig();
             	if (dbType.equals("1")) {
                 	dbConfig.setType(DatabaseType.BTREE);

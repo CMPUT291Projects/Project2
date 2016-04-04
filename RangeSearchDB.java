@@ -75,5 +75,4 @@ public class RangeSearchDB
 		System.err.println("Error doing key search on DB");
 	}
     }
-
 }
