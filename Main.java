@@ -41,7 +41,7 @@ public class Main
 				RangeSearchDB rs = new RangeSearchDB();
 				rs.run(dbType);
 			} else if (action.equals("5")) {
-				DbInstance.deleteInstance(dbType);
+				DbInstance.deleteInstance();
 			} else if (action.equals("6")) {
 				break;
 			} else {

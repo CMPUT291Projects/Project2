@@ -9,19 +9,17 @@ public class DbInstance
     	private static final String DB_TABLE_PATH = "/tmp/edcarter/";
 	private static Database instance;
 
-	/*public static void setInstance(Database db) {
-		instance = db;
-	}*/
-
 	public static Database getInstance(String dbType) {
 		if (instance == null) instance = constructInstance(dbType);
 		return instance;
 	}
 		
-	public static void deleteInstance(String dbType) {
+	public static void deleteInstance() {
 		try {
-			Database my_table = getInstance(dbType);
+			DatabaseConfig dbConfig = new DatabaseConfig();
+			Database my_table = new Database(DB_TABLE, null, dbConfig);;
 			my_table.remove(DB_TABLE,null,null);
+			new File(DB_TABLE).delete();
 			instance = null;
 		} catch (Exception ex) {
 			System.out.println("Unable to delete db");

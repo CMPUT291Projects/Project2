@@ -17,6 +17,8 @@ public class RangeSearchDB
 	String endkeystr = co.readLine().toLowerCase();
 	String datastr = null;
 
+	
+
         DatabaseEntry key = new DatabaseEntry();
         key.setData(keystr.getBytes());
         key.setSize(keystr.length());
@@ -33,10 +35,7 @@ public class RangeSearchDB
 			keystr = new String(key.getData());
 			datastr = new String(data.getData());
 
-			System.out.println(String.format("First: %b", keystr.compareTo(endkeystr) < 0));
-			System.out.println(String.format("Second: %b", oprStatus == OperationStatus.SUCCESS));
-
-			while (keystr.compareTo(endkeystr) < 0 && oprStatus == OperationStatus.SUCCESS) {
+			while (keystr.compareTo(endkeystr) <= 0 && oprStatus == OperationStatus.SUCCESS) {
 				records.add(new KeyValue(keystr, datastr));
 				oprStatus = std_cursor.getNext(key, data, LockMode.DEFAULT);
 				keystr = new String(key.getData());
@@ -47,6 +46,25 @@ public class RangeSearchDB
 			micros = (end - start) / 1000;
 		} else if (dbType.equals("2")) {
 			//hashtable
+			long start = System.nanoTime();
+			Cursor std_cursor = std_db.openCursor(null, null);
+			OperationStatus oprStatus = std_cursor.getSearchKeyRange(key, data, LockMode.DEFAULT);
+			System.out.println(String.format("operation status success: %b", oprStatus == OperationStatus.SUCCESS));
+			keystr = new String(key.getData());
+			datastr = new String(data.getData());
+
+			while (keystr.compareTo(endkeystr) <= 0 && oprStatus == OperationStatus.SUCCESS) {
+				records.add(new KeyValue(keystr, datastr));
+				String nextKey = keystr + "a";
+				key.setData(nextKey.getBytes());
+				oprStatus = std_cursor.getSearchKeyRange(key, data, LockMode.DEFAULT);
+				keystr = new String(key.getData());
+				datastr = new String(data.getData());
+			}
+			long end = System.nanoTime();
+
+			micros = (end - start) / 1000;
+			
 		}
 
 		System.out.println(String.format("%d records retrieved in %d micro-seconds", records.size(), micros));
