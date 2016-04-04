@@ -36,6 +36,8 @@ public class Main
 				ksdb.run(dbType);
 			} else if (action.equals("3")) {
 				//retrieve by data
+				DataSearchDB dsdb = new DataSearchDB();
+				dsdb.run(dbType);
 			} else if (action.equals("4")) {
 				//retrieve range
 				RangeSearchDB rs = new RangeSearchDB();

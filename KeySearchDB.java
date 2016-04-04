@@ -15,7 +15,6 @@ public class KeySearchDB {
         System.out.println("Enter a key to search:");
         Console co = System.console();
 	String keystr = co.readLine().toLowerCase();
-	System.out.println();
 
         key = new DatabaseEntry();
         key.setData(keystr.getBytes());
