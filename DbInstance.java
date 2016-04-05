@@ -9,18 +9,30 @@ public class DbInstance
     private static final String DB_INDEX_TABLE = "/tmp/edcarter/db_index_table.db";
     private static final String DB_TABLE_PATH = "/tmp/edcarter/";
     private static Database instance;
+    private static SecondaryDatabase index_instance;
 
-    public DbInstance() {}
+    private DbInstance() {}
 
     public static Database getInstance(String dbType) {
         if (instance == null) instance = constructInstance(dbType);
         return instance;
     }
 
-    public static void deleteInstance() {
+    public static SecondaryDatabase getIndexInstance(Database primaryDb) {
+        if (index_instance == null) index_instance = (new DbInstance()).createIndexDatabase(primaryDb);
+        return index_instance;
+    }
+
+    public static void deleteInstance(String dbType) {
         try {
             DatabaseConfig dbConfig = new DatabaseConfig();
-            Database my_table = new Database(DB_TABLE, null, dbConfig);;
+            Database my_table = new Database(DB_TABLE, null, dbConfig);
+            if (dbType.equals("3")) {
+                index_instance.close();
+                index_instance = null;
+                File idbf = new File(DB_INDEX_TABLE);
+                idbf.delete();
+            }
             my_table.remove(DB_TABLE,null,null);
             File my_file = new File(DB_TABLE);
             my_file.delete();
@@ -32,6 +44,7 @@ public class DbInstance
 
     public static void closeInstance() {
         try {
+            if (index_instance != null) instance.close();
             if (instance != null) instance.close();
         } catch (DatabaseException ex) {
             System.out.println("Unable to close database");

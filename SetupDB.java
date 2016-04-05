@@ -34,8 +34,8 @@ public class SetupDB {
 
             Database my_table = DbInstance.getInstance(dbType);
             if (dbType.equals("3")) { // Create secondary database
-                DbInstance dbi = new DbInstance();
-                SecondaryDatabase my_index_table = dbi.createIndexDatabase(my_table);
+                //DbInstance dbi = new DbInstance();
+                SecondaryDatabase my_index_table = DbInstance.getIndexInstance(my_table);
             }
             /* populate the new database with NO_RECORDS records */
             populateTable(my_table,NO_RECORDS);
