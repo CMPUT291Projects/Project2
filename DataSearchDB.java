@@ -28,7 +28,7 @@ public class DataSearchDB
 				start = System.nanoTime();
 				//OperationStatus oprStatus = indexDb.get(null, key, data, LockMode.DEFAULT);
 				OperationStatus oprStatus = sec_cursor.getSearchKey(key, pKey, data, LockMode.DEFAULT);
-				records.add(new KeyValue(new String(key.getData()), new String(data.getData())));
+				records.add(new KeyValue(new String(pKey.getData()), new String(data.getData())));
 
 			} else {
 				start = System.nanoTime();
