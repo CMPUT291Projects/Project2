@@ -28,10 +28,15 @@ public class SetupDB {
 
         try {
 
-	    Database my_table = DbInstance.getInstance(dbType);
+            Database my_table = DbInstance.getInstance(dbType);
+            if (dbType.equals("3")) { // Create secondary database
+                DbInstance dbi = new DbInstance();
+                SecondaryDatabase my_index_table = dbi.createIndexDatabase(my_table);
+            }
             /* populate the new database with NO_RECORDS records */
             populateTable(my_table,NO_RECORDS);
             my_table.sync();
+
             System.out.println(String.format("100000 records inserted into database %s", my_table.getDatabaseFile()));
 
         }
@@ -40,20 +45,18 @@ public class SetupDB {
         }
     }
 
-
-
     /*
     *  To poplate the given table with nrecs records
-    *  
-    *  A sample program to create an Database, and then 
+    *
+    *  A sample program to create an Database, and then
     *  populate the db with 1000 records, using Berkeley DB
-    *  
+    *
     *  Author: Prof. Li-Yan Yuan, University of Alberta
-    * 
+    *
     *  A directory named "/tmp/my_db" must be created before testing this program.
-    *  You may replace my_db with user_db, where user is your user name, 
+    *  You may replace my_db with user_db, where user is your user name,
     *  as required.
-    * 
+    *
     *  Modified on March 30, 2007 for Berkeley DB 4.3.28
     *
     */
