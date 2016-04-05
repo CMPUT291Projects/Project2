@@ -17,7 +17,6 @@ public class DbInstance
         return instance;
     }
 
-
     public static void deleteInstance() {
         try {
             DatabaseConfig dbConfig = new DatabaseConfig();
@@ -66,22 +65,12 @@ public class DbInstance
 
     public SecondaryDatabase createIndexDatabase(Database primaryDb) {
         try {
-            //Files.delete(Paths.get("/tmp/edcarter/_db.001"));
-            // EnvironmentConfig envConfig = new EnvironmentConfig();
-            // envConfig.setAllowCreate(true);
-            // envConfig.setInitializeCache(true);
-            // envConfig.setCacheSize(1000000);
-            // Environment env = new Environment(null, envConfig);
-
-            SwapKeys keyCreator = new SwapKeys(); // Your key creator implementation.
             SecondaryConfig secConfig = new SecondaryConfig();
             secConfig.setAllowCreate(true);
             secConfig.setSortedDuplicates(true);
-            secConfig.setKeyCreator(keyCreator);
+            secConfig.setKeyCreator(new SwapKeys());
             secConfig.setType(DatabaseType.BTREE);
-            //SecondaryDatabase newDb = env.openSecondaryDatabase(null, "my_index_table", DB_TABLE_PATH, primaryDb, secConfig);
-            SecondaryDatabase newDb = new SecondaryDatabase(DB_INDEX_TABLE, null, primaryDb, secConfig);
-            return newDb;
+            return new SecondaryDatabase(DB_INDEX_TABLE, null, primaryDb, secConfig);
         } catch (Exception e) {
             System.err.println("Secondary database error: " + e);
             return null;
@@ -90,9 +79,7 @@ public class DbInstance
 
     public class SwapKeys implements SecondaryKeyCreator {
 
-        SwapKeys() {
-
-        }
+        SwapKeys() { }
 
         @Override
         public boolean createSecondaryKey(SecondaryDatabase secondary,

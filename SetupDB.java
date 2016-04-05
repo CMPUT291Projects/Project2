@@ -18,6 +18,10 @@ import java.nio.file.*;
 
 public class SetupDB {
 
+    private static final String DB_TABLE = "/tmp/edcarter/db_table.db";
+    private static final String DB_INDEX_TABLE = "/tmp/edcarter/db_index_table.db";
+    private static final String DB_TABLE_PATH = "/tmp/edcarter/";
+
     private static final int NO_RECORDS = 100000;
 
     public SetupDB() {

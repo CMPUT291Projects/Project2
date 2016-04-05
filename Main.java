@@ -25,7 +25,7 @@ public class Main
 				"To retrieve records with a given reange of key values  enter '4'\n" +
 				"To destroy the database enter '5'\n" +
 				"To quit enter '6'\n");
-			
+
 			Console co = System.console();
 			String action = co.readLine().toUpperCase();
 			if (action.equals("1")) {
