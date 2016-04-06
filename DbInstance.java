@@ -25,8 +25,6 @@ public class DbInstance
 
     public static void deleteInstance(String dbType) {
         try {
-            //DatabaseConfig dbConfig = new DatabaseConfig();
-            //Database my_table = new Database(DB_TABLE, null, dbConfig);
             if (dbType.equals("3")) {
                 if (index_instance != null) { 
                     index_instance.close();
@@ -37,7 +35,6 @@ public class DbInstance
                 }
                 index_instance = null;
             }
-            //my_table.remove(DB_TABLE,null,null);
 
             if (instance != null) {
                 index_instance.close();
@@ -69,7 +66,6 @@ public class DbInstance
             dbConfig.setType(DatabaseType.HASH);
         } else if (dbType.equals("3")) {
             dbConfig.setType(DatabaseType.BTREE);
-            //construct the secondary db
         } else {
             System.err.println("Invalid database type specified.");
         }
