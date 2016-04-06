@@ -26,7 +26,7 @@ public class RangeSearchDB
 	try {
 		long micros = 0;
 		List<KeyValue> records = new ArrayList<KeyValue>();
-		if (dbType.equals("1")) {
+		if (dbType.equals("1") || dbType.equals("3")) {
 			//btree
 			key.setData(startkeystr.getBytes());
         		key.setSize(startkeystr.length());
