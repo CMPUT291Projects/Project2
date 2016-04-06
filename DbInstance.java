@@ -25,29 +25,39 @@ public class DbInstance
 
     public static void deleteInstance(String dbType) {
         try {
-            DatabaseConfig dbConfig = new DatabaseConfig();
-            Database my_table = new Database(DB_TABLE, null, dbConfig);
+            //DatabaseConfig dbConfig = new DatabaseConfig();
+            //Database my_table = new Database(DB_TABLE, null, dbConfig);
             if (dbType.equals("3")) {
-                index_instance.close();
-                index_instance = null;
+                if (index_instance != null) { 
+                    index_instance.close();
+		}
                 File idbf = new File(DB_INDEX_TABLE);
-                idbf.delete();
+                if (idbf.exists()) {
+                    idbf.delete();
+                }
+                index_instance = null;
             }
-            my_table.remove(DB_TABLE,null,null);
+            //my_table.remove(DB_TABLE,null,null);
+
+            if (instance != null) {
+                index_instance.close();
+            }
             File my_file = new File(DB_TABLE);
-            my_file.delete();
+            if (my_file.exists()) {
+                my_file.delete();
+            }
             instance = null;
         } catch (Exception ex) {
-            System.out.println("Unable to delete db");
+            System.out.println(String.format("Unable to delete db: %s", ex.getMessage()));
         }
     }
 
     public static void closeInstance() {
         try {
-            if (index_instance != null) instance.close();
+            if (index_instance != null) index_instance.close();
             if (instance != null) instance.close();
         } catch (DatabaseException ex) {
-            System.out.println("Unable to close database");
+            System.out.println(String.format("Unable to close database: %s", ex.getMessage()));
         }
     }
 

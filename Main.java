@@ -55,7 +55,7 @@ public class Main
 		try {
 			DbInstance.closeInstance();
 		} catch (Exception ex) {
-			System.err.println("Error closing database.");
+			System.err.println(String.format("Error closing database: %s", ex.getMessage()));
 		}
 	}
 }
