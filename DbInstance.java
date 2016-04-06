@@ -5,9 +5,9 @@ import java.nio.file.*;
 
 public class DbInstance
 {
-    private static final String DB_TABLE = "/tmp/edcarter/db_table.db";
-    private static final String DB_INDEX_TABLE = "/tmp/edcarter/db_index_table.db";
-    private static final String DB_TABLE_PATH = "/tmp/edcarter/";
+    private static final String DB_TABLE = "/tmp/edcarter_db/db_table.db";
+    private static final String DB_INDEX_TABLE = "/tmp/edcarter_db/db_index_table.db";
+    private static final String DB_TABLE_PATH = "/tmp/edcarter_db/";
     private static Database instance;
     private static SecondaryDatabase index_instance;
 
